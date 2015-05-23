@@ -1,5 +1,6 @@
 package com.me.socialize.socializeme;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +14,19 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -91,6 +105,7 @@ public class MakeAccountActivity extends ActionBarActivity implements View.OnCli
         //Submit kliknut
         if(v == buttonSubmit)
         {
+            //Provjeri dali su sva polja ispunjena
             if(editTextFirstName.getText().length()>0 && editTextLastName.getText().length()>0 && editTextEmail.getText().length() > 0 && editTextPassword.getText().length() > 0 && editTextConfirmPassword.getText().length() > 0)
             {
                 //Provjeri dali je email ispravan
@@ -105,12 +120,58 @@ public class MakeAccountActivity extends ActionBarActivity implements View.OnCli
                     Toast.makeText(this,"Passwords do not match!",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //Sve je ispravno provjeri u bazi
-                Toast.makeText(this,"Account Created",Toast.LENGTH_SHORT).show();
+                //Sve je ispravno, pokusaj unijeti u bazu
+                new InsertIntoDatabase().execute();
             }
             else
             {
                 Toast.makeText(this,"All fields must be filled!",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    class InsertIntoDatabase extends AsyncTask<String, String, String>
+    {
+        @Override
+        protected String doInBackground(String... params) {
+            //Pohrani podatke u arraylist koje ce proslijedit u PHP za ubacivanje u bazu
+            ArrayList<NameValuePair> podatci = new ArrayList<NameValuePair>();
+            podatci.add(new BasicNameValuePair("firstname",editTextFirstName.getText().toString()));
+            podatci.add(new BasicNameValuePair("lastname",editTextLastName.getText().toString()));
+            podatci.add(new BasicNameValuePair("email",editTextEmail.getText().toString()));
+            podatci.add(new BasicNameValuePair("password",editTextPassword.getText().toString()));
+            podatci.add(new BasicNameValuePair("country",spinnerCountries.getSelectedItem().toString()));
+            try {
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://socializeme.site90.com/InsertInto.php");//php koji ce executeat nasu skriptu
+                httpPost.setEntity(new UrlEncodedFormEntity(podatci, HTTP.UTF_8));//Proslijedi podatke php-u
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                //Dohvati response da dobijemo source
+                HttpEntity entity = httpResponse.getEntity();
+                InputStream inputStream = entity.getContent();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String result=reader.readLine();
+                inputStream.close();
+                return result;//Vrati source od stranice koji ce nam reci dali je registracija uspijela
+            }
+            catch(Exception e)
+            {
+                Log.d("SocializeMe",e.toString());
+            }
+
+            return "Failed to make an account";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //Ispisi dali je registracija uspijensa i ako nije zasto ne
+            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+            //Ako je uspijesno napravio account zatvori formu
+            if(s.equals("Account Created!\t"))
+            {
+                finish();//Zatvori activity
             }
         }
     }
