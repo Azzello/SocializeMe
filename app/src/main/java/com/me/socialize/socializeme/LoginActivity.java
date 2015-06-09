@@ -163,7 +163,13 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
             if(s.equals("Login successful!"))
             {
+                //Uspjesno se ulogirao
                 Toast.makeText(getApplicationContext(),"Welcome",Toast.LENGTH_SHORT).show();
+                //Pokreni glavni activity i ugasi ovaj
+                Intent homeActivity = new Intent(getApplicationContext(),HomeActivity.class);
+                homeActivity.putExtra("EMAIL",editTextEmail.getText().toString());//proslijedi email u iduci activity
+                startActivity(homeActivity);//pokreni glavni activity
+                finish();//Gasi ovaj activity
             }
         }
     }
