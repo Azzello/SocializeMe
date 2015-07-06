@@ -157,7 +157,6 @@ public class MakeAccountActivity extends ActionBarActivity implements View.OnCli
             }
             catch(Exception e)
             {
-                Log.d("SocializeMe",e.toString());
             }
 
             return "Failed to make an account";

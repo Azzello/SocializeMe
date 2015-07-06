@@ -1,17 +1,15 @@
 package com.me.socialize.socializeme;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Debug;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -32,6 +30,7 @@ import java.util.ArrayList;
 public class SearchPersonActivity extends ActionBarActivity {
     String Firstname;
     String Lastname;
+    String userEmail;
     ArrayList<Person> Persons;
 
     ListView listViewSearchResults;
@@ -75,17 +74,37 @@ public class SearchPersonActivity extends ActionBarActivity {
         Intent intent = getIntent();
         Firstname = intent.getExtras().getString("FIRSTNAME","");
         Lastname = intent.getExtras().getString("LASTNAME","");
+        userEmail = intent.getExtras().getString("USEREMAIL","");
         Persons = new ArrayList<Person>();
 
         listViewSearchResults = (ListView)findViewById(R.id.listViewSearchPerson);
 
-        new SearchForPerson().execute(Firstname,Lastname);
+        new SearchForPerson().execute(Firstname,Lastname);//Pokreni asynctask za trazenje u bazi
+        SetEventListeners();
     }
+
+    void SetEventListeners()
+    {
+        //Listview item click listener
+        listViewSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //kliknut je item i pokreni activity za profil od kliknute osobe
+                String PersonEmail = Persons.get(position).m_Email.substring(0, Persons.get(position).m_Email.length() - 1);
+                Intent personProfileActivity = new Intent(getApplicationContext(), PersonProfileActivity.class);
+                personProfileActivity.putExtra("FULLNAME",Persons.get(position).GetFullname());
+                personProfileActivity.putExtra("EMAIL",PersonEmail);
+                personProfileActivity.putExtra("USEREMAIL",userEmail);
+                startActivity(personProfileActivity);
+            }
+        });
+    }
+
     class SearchForPerson extends AsyncTask<String, String, String>
     {
         @Override
         protected String doInBackground(String... params) {
-            //Pohrani podatke u arraylist koje ce proslijedit u PHP za ubacivanje u bazu
+            //Pohrani podatke u arraylist koje ce proslijedit u PHP za dohvacanje iz baze
             ArrayList<NameValuePair> podatci = new ArrayList<NameValuePair>();
             podatci.add(new BasicNameValuePair("firstname",params[0]));
             podatci.add(new BasicNameValuePair("lastname",params[1]));
@@ -100,20 +119,21 @@ public class SearchPersonActivity extends ActionBarActivity {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
-                while ((line = reader.readLine()) != null) // Read line by line
+                while ((line = reader.readLine()) != null) // citaj red po red
                 {
-                    Log.d("SocializeMe",line);
+
                     if(line.equals("<!-- Hosting24 Analytics Code -->"))
                         break;
                     line = line.replace("<br>","");
                     Persons.add(Person.ParsePerson(line));
                 }
+
                 inputStream.close();
                 return null;
             }
             catch(Exception e)
             {
-                Log.d("SocializeMe", e.toString());
+
             }
 
             return "Failed to make an account";
@@ -122,7 +142,7 @@ public class SearchPersonActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("SocializeMe", Persons.size() + "");
+
             searchArrayAdapter = new SearchArrayAdapter(SearchPersonActivity.this,R.layout.layout_listview_row,Persons);
             listViewSearchResults.setAdapter(searchArrayAdapter);
         }

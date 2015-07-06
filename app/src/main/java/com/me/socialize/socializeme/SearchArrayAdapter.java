@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Toni on 9.6.2015..
+ * custom array adapter za listview
  */
 public class SearchArrayAdapter extends ArrayAdapter<Person> {
 

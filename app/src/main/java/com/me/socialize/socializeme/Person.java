@@ -25,4 +25,8 @@ public class Person {
         Person TempPerson = new Person(PersonData[0],PersonData[1],PersonData[2],PersonData[3]);
         return TempPerson;
     }
+    public String GetFullname()
+    {
+        return m_Firstname + " " + m_Lastname;
+    }
 }

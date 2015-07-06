@@ -5,4 +5,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="custom_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowTitleStyle">@style/custom_dialog_title_style</item>
+    </style>
+    
+    <style name="custom_dialog_title_style" parent="android:Widget.TextView">
+        <item name="android:background">#17063A</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
 </resources>

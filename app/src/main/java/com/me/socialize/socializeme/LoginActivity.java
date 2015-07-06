@@ -2,6 +2,7 @@ package com.me.socialize.socializeme;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     TextView textViewNeedAccount;
     EditText editTextEmail;
     EditText editTextPassword;
+    CheckBox checkBoxRememberMe;
     Button buttonLogin;
 
     @Override
@@ -44,6 +47,37 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         //Pronalazi sve view-e
         FindViews();
+        LoadLoginSettings();
+    }
+
+    public void LoadLoginSettings()
+    {
+        SharedPreferences sharedPreferencesSettings = getSharedPreferences("SocializeMeSettings",0);
+        boolean rememberMe = sharedPreferencesSettings.getBoolean("REMEMBERME",false);
+
+        if(rememberMe)
+        {
+            String rememberMeEmail = sharedPreferencesSettings.getString("REMEMBERMEEMAIL","");
+            String remembermepassword = sharedPreferencesSettings.getString("REMEMBERMEPASSWORD","");
+
+            editTextEmail.setText(rememberMeEmail);
+            editTextPassword.setText(remembermepassword);
+        }
+        checkBoxRememberMe.setChecked(rememberMe);
+    }
+
+    public void SaveLoginSettings()
+    {
+        if(checkBoxRememberMe.isChecked())
+        {
+            SharedPreferences sharedPreferencesSettings = getSharedPreferences("SocializeMeSettings",0);
+            SharedPreferences.Editor sharedPreferencesSettingsEditor = sharedPreferencesSettings.edit();
+
+            sharedPreferencesSettingsEditor.putBoolean("REMEMBERME",true);
+            sharedPreferencesSettingsEditor.putString("REMEMBERMEEMAIL",editTextEmail.getText().toString());
+            sharedPreferencesSettingsEditor.putString("REMEMBERMEPASSWORD",editTextPassword.getText().toString());
+            sharedPreferencesSettingsEditor.commit();
+        }
     }
 
     @Override
@@ -79,6 +113,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
+        checkBoxRememberMe = (CheckBox)findViewById(R.id.checkBoxRememberMe);
 
         SetEventListeners();
     }
@@ -151,7 +186,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             }
             catch(Exception e)
             {
-                Log.d("SocializeMe", e.toString());
+
             }
             return "Login failed!";
         }
@@ -163,6 +198,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
             if(s.equals("Login successful!"))
             {
+                SaveLoginSettings();
                 //Uspjesno se ulogirao
                 Toast.makeText(getApplicationContext(),"Welcome",Toast.LENGTH_SHORT).show();
                 //Pokreni glavni activity i ugasi ovaj

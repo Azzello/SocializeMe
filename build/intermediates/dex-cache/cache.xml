@@ -2,20 +2,6 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\pre-dexed\debug\classes-f106cf63e27d7d1613503626d3f4d7d0f8bfbfb8.jar" />
-    </item>
-    <item
-        jar="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-e37a873c87f65e3c5d73d662c5a29e0c83ddf155.jar" />
-    </item>
-    <item
         jar="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -23,18 +9,11 @@
         <dex dex="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\pre-dexed\debug\classes-32eb5b1dd890489b9f348f1b2f911c577fbb2da6.jar" />
     </item>
     <item
-        jar="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
+        jar="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\pre-dexed\debug\classes-82770f5cee38dc4a05392a4bb2d724dde5777c16.jar" />
-    </item>
-    <item
-        jar="D:\Android\SDK\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-69b5ce9d19c43e11bc900b52e9c94f98553acfe7.jar" />
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-e37a873c87f65e3c5d73d662c5a29e0c83ddf155.jar" />
     </item>
     <item
         jar="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
@@ -49,6 +28,27 @@
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
         <dex dex="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-a8457e37d0ea514e7388ff70dea99ed3a5e1596f.jar" />
+    </item>
+    <item
+        jar="D:\Android\SDK\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-69b5ce9d19c43e11bc900b52e9c94f98553acfe7.jar" />
+    </item>
+    <item
+        jar="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="D:\AndroidProjectNew\SocializeMe\app\build\intermediates\pre-dexed\debug\classes-82770f5cee38dc4a05392a4bb2d724dde5777c16.jar" />
+    </item>
+    <item
+        jar="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Toni\AndroidStudioProjects\SocializeMe\app\build\intermediates\pre-dexed\debug\classes-f106cf63e27d7d1613503626d3f4d7d0f8bfbfb8.jar" />
     </item>
 
 </items>
